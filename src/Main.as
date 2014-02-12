@@ -15,6 +15,10 @@ package
 	import flash.ui.MultitouchInputMode;
 	import flash.utils.getQualifiedClassName;
 	import managers.AssetsManager;
+	import nape.geom.Vec2;
+	import nape.space.Space;
+	import nape.util.ShapeDebug;
+	import signals.SignalsHub;
 	import starling.animation.Juggler;
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -31,10 +35,12 @@ package
 		public static var assetManager:AssetManager;
 		public static var assetsManagerUtil:AssetsManager;
 		public static var juggler:Juggler;
+		public static var space:Space;
 		
 		private var _imagesPool:AbstractPool;
 		private var _animationsPool:AbstractPool;
 		private var _quadsPool:AbstractPool;
+		//private var _debug:ShapeDebug;
 		
 		/**
 		 * 
@@ -87,6 +93,30 @@ package
 		/**
 		 * 
 		 */
+		private function initNape():void
+		{
+			space = new Space(new Vec2(0, 5));
+			
+			//_debug = new ShapeDebug(800, 480, 0x33333333);
+			//_debug.draw(space);
+			//var MovieClipDebug:flash.display.MovieClip = new flash.display.MovieClip();
+			//MovieClipDebug.addChild(_debug.display);
+			//Starling.current.nativeOverlay.addChild(MovieClipDebug);
+			
+			addEventListener(Event.ENTER_FRAME, loop);
+		}
+		
+		/**
+		 * 
+		 */
+		private function initState():void
+		{
+			state = new AllStates.LOADING_STATE;
+		}
+		
+		/**
+		 * 
+		 */
 		private function initStarling():void
 		{
 			setUpStarling(true);
@@ -97,7 +127,8 @@ package
 		 */
 		override public function handleStarlingReady():void
 		{
-			state = new AllStates.LOADING_STATE;
+			initState();
+			initNape();
 			
 			var appDir:File = File.applicationDirectory;
 			assetManager = new AssetManager(scaleFactor);
@@ -112,10 +143,18 @@ package
 						state = new AllStates.MAIN_MENU_STATE;
 					}
 				});
-			 
-			//HOW TO EXTRACT FROM ASSET MANAGER	
-			//new Image( assetManager.getTexture('theimage') );
-			//new MovieClip( assetManager.getTextures('prefixName', frameRate));	
+		}
+		
+		/**
+		 * 
+		 * @param	e
+		 */
+		private function loop(e:Event):void
+		{
+			space.step(1 / 60);
+			//_debug.clear();
+			//_debug.draw(space);
+			//_debug.flush();
 		}
 		
 	}
