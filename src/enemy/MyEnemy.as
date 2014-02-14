@@ -1,22 +1,18 @@
-package hero 
+package enemy 
 {
-	import citrus.core.IState;
-	import citrus.objects.platformer.nape.Hero;
-	import flash.utils.Dictionary;
-	import input.MobileInput;
+	import citrus.objects.platformer.nape.Enemy;
 	import nape.geom.Vec2;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
-	import nape.phys.Material;
-	import nape.shape.Polygon;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	/**
 	 * ...
 	 * @author Alex Popescu
 	 */
-	public class MyHero extends Hero
+	public class MyEnemy extends Enemy
 	{
+		
 		public static const STATE_WALKING_LEFT:String = "moving_left";
 		public static const STATE_WALKING_RIGHT:String = "moving_right";
 		public static const STATE_JUMPING_LEFT:String = "jumping_left";
@@ -27,21 +23,15 @@ package hero
 		public static const STATE_FALLING_RIGHT:String = "falling_right";
 		public static const STATE_IDLE:String = "idle";
 		
-		public var inventory:Dictionary = new Dictionary();
-		
-		private var _mobileInput:MobileInput;
 		private var currentState:String = STATE_IDLE;
 		private var prevState:String = currentState;
 		private var walkAnimation:MovieClip;
 		private var jumpImage:Image;
 		private var idleImage:Image;
 		
-		public function MyHero(name:String,  params:Object=null) 
+		public function MyEnemy(name:String, params:Object) 
 		{
 			super(name, params);
-			
-			_mobileInput = new MobileInput();
-			_mobileInput.initialize();
 			
 			walkAnimation = new MovieClip(Main.assetManager.getTextures("character_walk"), 30);
 			jumpImage = new Image(Main.assetManager.getTexture("character_jump"));
@@ -49,11 +39,11 @@ package hero
 			
 			this._body = new Body(BodyType.DYNAMIC, new Vec2(150, 0));
 			this.view = idleImage;
-			this.acceleration = 100;
-			this.jumpHeight = 300;
-			this.jumpAcceleration = 10;
-			this.maxVelocity = 100;
-			this.canDuck = false;
+			//this.acceleration = 100;
+			//this.jumpHeight = 300;
+			//this.jumpAcceleration = 10;
+			//this.maxVelocity = 100;
+			//this.canDuck = false;
 		}
 		
 		/**
@@ -156,7 +146,7 @@ package hero
 				
 			}
 			
-			Main.server.sendToServer( { playerID:Main.server.id, state:currentState, velocity:this.velocity } );
+			//Main.server.sendToServer( { playerID:Main.server.id, state:currentState, velocity:this.velocity } );
 		}
 		
 		/**
@@ -164,7 +154,6 @@ package hero
 		 */
 		override public function destroy():void 
 		{
-			_mobileInput.destroy();
 			super.destroy();
 		}
 	}

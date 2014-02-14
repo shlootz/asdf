@@ -18,6 +18,7 @@ package
 	import nape.geom.Vec2;
 	import nape.space.Space;
 	import nape.util.ShapeDebug;
+	import server.serverBridge.ServerBridge;
 	import signals.SignalsHub;
 	import starling.animation.Juggler;
 	import starling.core.Starling;
@@ -36,6 +37,7 @@ package
 		public static var assetsManagerUtil:AssetsManager;
 		public static var juggler:Juggler;
 		public static var space:Space;
+		public static var server:ServerBridge;
 		
 		private var _imagesPool:AbstractPool;
 		private var _animationsPool:AbstractPool;
@@ -96,13 +98,6 @@ package
 		private function initNape():void
 		{
 			space = new Space(new Vec2(0, 5));
-			
-			//_debug = new ShapeDebug(800, 480, 0x33333333);
-			//_debug.draw(space);
-			//var MovieClipDebug:flash.display.MovieClip = new flash.display.MovieClip();
-			//MovieClipDebug.addChild(_debug.display);
-			//Starling.current.nativeOverlay.addChild(MovieClipDebug);
-			
 			addEventListener(Event.ENTER_FRAME, loop);
 		}
 		
@@ -129,6 +124,7 @@ package
 		{
 			initState();
 			initNape();
+			initServerConnection();
 			
 			var appDir:File = File.applicationDirectory;
 			assetManager = new AssetManager(scaleFactor);
@@ -152,9 +148,11 @@ package
 		private function loop(e:Event):void
 		{
 			space.step(1 / 60);
-			//_debug.clear();
-			//_debug.draw(space);
-			//_debug.flush();
+		}
+		
+		private function initServerConnection():void
+		{
+			server = new ServerBridge();
 		}
 		
 	}

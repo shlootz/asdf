@@ -1,6 +1,7 @@
 package states.menuStates 
 {
 	import citrus.core.CitrusEngine;
+	import citrus.core.CitrusObject;
 	import citrus.core.starling.StarlingState;
 	import citrus.input.controllers.displaylist.VirtualJoystick;
 	import citrus.input.controllers.gamepad.controls.ButtonController;
@@ -9,9 +10,11 @@ package states.menuStates
 	import citrus.objects.CitrusSprite;
 	import citrus.objects.platformer.nape.Hero;
 	import citrus.objects.platformer.nape.Platform;
+	import citrus.objects.platformer.simple.DynamicObject;
 	import citrus.physics.nape.Nape;
 	import controller.MyButton;
 	import controller.MyJoystick;
+	import enemy.MyEnemy;
 	import feathers.controls.Alert;
 	import feathers.controls.Button;
 	import feathers.controls.Callout;
@@ -24,6 +27,7 @@ package states.menuStates
 	import flash.geom.Rectangle;
 	import flash.ui.GameInputDevice;
 	import hero.MyHero;
+	import nape.geom.GeomPoly;
 	import nape.geom.Vec2;
 	import nape.geom.Vec3;
 	import nape.phys.Body;
@@ -31,6 +35,7 @@ package states.menuStates
 	import nape.phys.Material;
 	import nape.shape.Circle;
 	import nape.shape.Polygon;
+	import nape.shape.Shape;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.events.Event;
@@ -55,7 +60,7 @@ package states.menuStates
 			new MetalWorksMobileTheme();
 			
 			var nape:Nape = new Nape("asd");
-			//nape.visible = true;
+			nape.visible = true;
 			add(nape);
 			
 			var vj:MyJoystick = new MyJoystick("joy", { radius:120, defaultChannel:1 } );
@@ -89,6 +94,9 @@ package states.menuStates
 			
 			var hero:MyHero = new MyHero("hero", { x:100, y:200, width:50, height:50 } );
 			add(hero);
+			
+			var enemy:MyEnemy = new MyEnemy("enemy", { x:300, y:200, width:50, height:50 } );
+			add(enemy);
 			
 			view.camera.setUp(hero, new Rectangle(0, 0, 1000000, 1000), new Point(.5, .5));
 		}
