@@ -3,7 +3,9 @@ package
 	import abstract.AbstractPool;
 	import bridge.GenericDrawable;
 	import bridge.GraphicsEngineBridge;
+	import citrus.core.IState;
 	import citrus.core.starling.StarlingCitrusEngine;
+	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
@@ -18,7 +20,9 @@ package
 	import nape.geom.Vec2;
 	import nape.space.Space;
 	import nape.util.ShapeDebug;
-	import server.serverBridge.ServerBridge;
+	import org.osflash.signals.Signal;
+	import server.serverBridge.Server;
+	import signals.Signals;
 	import signals.SignalsHub;
 	import starling.animation.Juggler;
 	import starling.core.Starling;
@@ -26,6 +30,8 @@ package
 	import starling.display.MovieClip;
 	import starling.utils.AssetManager;
 	import states.AllStates;
+	import states.menuStates.MainMenuState;
+	import states.StatesBridge;
 	
 	/**
 	 * ...
@@ -37,12 +43,12 @@ package
 		public static var assetsManagerUtil:AssetsManager;
 		public static var juggler:Juggler;
 		public static var space:Space;
-		public static var server:ServerBridge;
+		public static var server:Server;
+		public static var statesBridge:StatesBridge;
 		
 		private var _imagesPool:AbstractPool;
 		private var _animationsPool:AbstractPool;
 		private var _quadsPool:AbstractPool;
-		//private var _debug:ShapeDebug;
 		
 		/**
 		 * 
@@ -70,6 +76,7 @@ package
 			super.handleAddedToStage(e);
 			createPools();
 			initStarling();
+			initSignals();
 		}		
 		
 		/**
@@ -120,11 +127,21 @@ package
 		/**
 		 * 
 		 */
+		private function initSignals():void
+		{
+			var mainListenersVector:Vector.<Function> = new Vector.<Function>;
+			mainListenersVector.push(changeState);
+			SignalsHub.getInstance().addSignal(Signals.CHANGE_GAME_STATE, new Signal(), mainListenersVector);
+		}
+		
+		/**
+		 * 
+		 */
 		override public function handleStarlingReady():void
 		{
 			initState();
 			initNape();
-			initServerConnection();
+			statesBridge = new StatesBridge(state);
 			
 			var appDir:File = File.applicationDirectory;
 			assetManager = new AssetManager(scaleFactor);
@@ -137,6 +154,7 @@ package
 					{
 						juggler = _starling.juggler;
 						state = new AllStates.MAIN_MENU_STATE;
+						initServerConnection();
 					}
 				});
 		}
@@ -150,11 +168,24 @@ package
 			space.step(1 / 60);
 		}
 		
+		/**
+		 * 
+		 */
 		private function initServerConnection():void
 		{
-			server = new ServerBridge();
+			server = new Server();
+			server.connect("192.168.11.51:8080");
 		}
 		
+		/**
+		 * 
+		 * @param	signalId
+		 * @param	newState
+		 */
+		private function changeState(signalId:String, newState:Class):void
+		{
+			state = new newState;
+		}
 	}
 	
 }

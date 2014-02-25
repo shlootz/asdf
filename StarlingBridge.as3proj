@@ -55,9 +55,9 @@
     <element path="lib\starling.swc" />
     <element path="lib\greensock.swc" />
     <element path="lib\feathers.swc" />
-    <element path="lib\AssetsManager.swc" />
     <element path="lib\CEV3-1-8-Starling-Feathers-Nape.swc" />
     <element path="lib\FlashSocket.IO_0.7.0-Alpha.swc" />
+    <element path="lib\AssetsManager.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

@@ -2,6 +2,7 @@ package hero
 {
 	import citrus.core.IState;
 	import citrus.objects.platformer.nape.Hero;
+	import flash.geom.Point;
 	import flash.utils.Dictionary;
 	import input.MobileInput;
 	import nape.geom.Vec2;
@@ -35,6 +36,16 @@ package hero
 		private var walkAnimation:MovieClip;
 		private var jumpImage:Image;
 		private var idleImage:Image;
+		private var pos:Object = new Object();
+		private var sendingStep:int = 0;
+		
+		private var prevVelocity:Array = new Array();
+		private var intermVelocity:Array = new Array(3);
+		
+		private var prevVeloPoint:Point = new Point();
+		private var currVeloPoint:Point = new Point();
+		
+		private var interPercent:Number;
 		
 		public function MyHero(name:String,  params:Object=null) 
 		{
@@ -63,6 +74,8 @@ package hero
 		override public function update(timeDelta:Number): void
 		{
 			super.update(timeDelta);
+			
+			interPercent = (Main.server.pingDelay) / 100;
 			
 			if (velocity[0] == 0 && velocity[1] == 0 && velocity[2] == 0)
 			{
@@ -156,7 +169,14 @@ package hero
 				
 			}
 			
-			Main.server.sendToServer( { playerID:Main.server.id, state:currentState, velocity:this.velocity } );
+			pos = {
+				x:this.x,
+				y:this.y
+			}
+			
+			Main.server.sendToServer( { type:"battle", room:Main.server.room, playerIndex:Main.server.player, velocity: { velo:this.velocity, pos:pos }, ping:Main.server.pingDelay} );
+			
+			prevVelocity = velocity;
 		}
 		
 		/**
@@ -165,7 +185,15 @@ package hero
 		override public function destroy():void 
 		{
 			_mobileInput.destroy();
-			super.destroy();
+			//super.destroy();
+		}
+		
+		/**
+		 * 
+		 */
+		override public function hurt () : void
+		{
+			
 		}
 	}
 

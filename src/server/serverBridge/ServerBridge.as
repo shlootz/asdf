@@ -2,6 +2,8 @@ package server.serverBridge
 {
 	import com.pnwrain.flashsocket.events.FlashSocketEvent;
 	import com.pnwrain.flashsocket.FlashSocket;
+	import signals.Signals;
+	import signals.SignalsHub;
 	/**
 	 * ...
 	 * @author Alex Popescu
@@ -11,59 +13,72 @@ package server.serverBridge
 		
 		protected var socket:FlashSocket;
 		
-		public var id:String;
-		
-		private var init:Boolean = true;
-		
-		public function ServerBridge() 
-		{
-			//82.77.154.114
-			//192.168.11.51
-			socket = new FlashSocket("192.168.11.51:8080");
-			socket.addEventListener(FlashSocketEvent.CONNECT, onConnect);
-            socket.addEventListener(FlashSocketEvent.MESSAGE, onMessage);
-            socket.addEventListener(FlashSocketEvent.IO_ERROR, onError);
-            socket.addEventListener(FlashSocketEvent.SECURITY_ERROR, onError);
-            socket.addEventListener("my other event", myCustomMessageHandler);
-		}
-		
-			protected function myCustomMessageHandler(event:FlashSocketEvent):void
+			public function ServerBridge() 
 			{
-				trace('we got a custom event!')    
+				
 			}
 			
+			public function connect(address:String):void
+			{
+				socket = new FlashSocket(address);
+				socket.addEventListener(FlashSocketEvent.CONNECT, onConnect);
+				socket.addEventListener(FlashSocketEvent.MESSAGE, onMessage);
+				socket.addEventListener(FlashSocketEvent.IO_ERROR, onError);
+				socket.addEventListener(FlashSocketEvent.SECURITY_ERROR, onError);
+				socket.addEventListener("my other event", myCustomMessageHandler);
+			}
+			
+			/**
+			 * 
+			 * @param	event
+			 */
+			protected function myCustomMessageHandler(event:FlashSocketEvent):void
+			{
+				
+			}
+			
+			/**
+			 * 
+			 * @param	event
+			 */
             protected function onConnect(event:FlashSocketEvent):void 
 			{
-                //clearStatus();
+				
             }
 			
+			/**
+			 * 
+			 * @param	event
+			 */
             protected function onError(event:FlashSocketEvent):void 
 			{
-                //setStatus("something went wrong");
-				trace("smth went wrong")
+				
             }
 			
+			/**
+			 * 
+			 * @param	msg
+			 */
             protected function setStatus(msg:String):void
 			{
-				trace(msg);
-                //status.text = msg;
-            }
-            protected function clearStatus():void
-			{
-                //status.text = "";
-                //this.currentState = "";
 				
             }
 			
+			/**
+			 * 
+			 */
+            protected function clearStatus():void
+			{
+				
+            }
+			
+			/**
+			 * 
+			 * @param	event
+			 */
             protected function onMessage(event:FlashSocketEvent):void
 			{
-                trace('we got message: ' + event.data);
 				
-                socket.send( { msgdata: event.data }, "my other event");
-				if (init)
-				{
-					id = String(event.data);
-				}
             }
 			
 			/**
