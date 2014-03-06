@@ -169,7 +169,7 @@ package enemy
 					updateEnabled = false;
 				}
 				
-				if (bufferedData.length >= 60)
+				if (bufferedData.length >= 100)
 				{
 					bData =  bufferedData[bufferedData.length - 2];
 					
