@@ -7,6 +7,7 @@ package
 	import citrus.core.starling.StarlingCitrusEngine;
 	import citrus.core.starling.StarlingState;
 	import citrus.core.starling.ViewportMode;
+	import feathers.themes.MetalWorksMobileTheme;
 	import flash.desktop.NativeApplication;
 	import flash.events.Event;
 	import flash.display.Sprite;
@@ -152,6 +153,7 @@ package
 					trace("Loading assets, progress:", ratio);
 					if (ratio == 1)
 					{
+						//new MetalWorksMobileTheme();
 						juggler = _starling.juggler;
 						state = new AllStates.MAIN_MENU_STATE;
 						//initServerConnection();

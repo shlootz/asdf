@@ -19,11 +19,11 @@ package states.menuStates
 		{
 			super.initialize();
 			//
-			//var alert:Alert = new Alert();
-			//alert.x = 150;
-			//alert.y = 150;
-			//alert.message = "Loading";
-			//addChild(alert);
+			var alert:Alert = new Alert();
+			alert.x = 150;
+			alert.y = 150;
+			alert.message = "Loading";
+			addChild(alert);
 		}
 		
 	}

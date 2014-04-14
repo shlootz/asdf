@@ -59,6 +59,7 @@
     <element path="lib\CEV3-1-8-Starling-Feathers-Nape.swc" />
     <element path="lib\FlashSocket.IO_0.7.0-Alpha.swc" />
     <element path="lib\AssetsManager.swc" />
+    <element path="lib\Flox-AS3.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
