@@ -13,18 +13,18 @@ package states.levelStates.QuartoStateClasses.turns
 		
 		public function TurnsManager() 
 		{
-			_currentTurn = _turnOne as Turn;
+			_currentTurn = _turnOne;
 		}
 		
 		public function changeTurn():void
 		{
-			if (_currentTurn == _turnOne as Turn)
+			if (_currentTurn == _turnOne)
 			{
-				_currentTurn = _turnTwo as Turn;
+				_currentTurn = _turnTwo;
 			}
 			else
 			{
-				_currentTurn = _turnOne as Turn;
+				_currentTurn = _turnOne;
 			}
 		}
 		
