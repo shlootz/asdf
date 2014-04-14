@@ -41,7 +41,7 @@ package states.lobby
 			lobbyListeners.push(foundPlayer);
 			SignalsHub.getInstance().addSignal(Signals.PLAYER_FOUND, new Signal(), lobbyListeners);
 			
-			Main.server.sendToServer(ServerMessageTemplate.getServerMessageTemplate('onLookingForPlayers', {timeout:0} ));
+			//Main.server.sendToServer(ServerMessageTemplate.getServerMessageTemplate('onLookingForPlayers', {timeout:0} ));
 		}
 		
 		/**

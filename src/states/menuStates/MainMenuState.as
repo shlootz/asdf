@@ -66,7 +66,6 @@ package states.menuStates
 		override public function initialize():void
 		{
 			super.initialize();
-			
 			button = new Button();
 			button.label = "Enter Lobby";
 			button.setSize(100, 100);
@@ -75,6 +74,8 @@ package states.menuStates
 			this.addChild( button );
 			
 			button.addEventListener(Event.TRIGGERED, buttonPressed);
+			
+			SignalsHub.getInstance().dispatchSignal(Signals.CHANGE_GAME_STATE, Signals.CHANGE_GAME_STATE, AllStates.QUARTO_STATE)
 		}
 		
 		/**
@@ -92,7 +93,7 @@ package states.menuStates
 		 */
 		private function buttonPressed(e:Event):void
 		{
-			SignalsHub.getInstance().dispatchSignal(Signals.CHANGE_GAME_STATE, Signals.CHANGE_GAME_STATE, AllStates.LOBBY_STATE)
+			SignalsHub.getInstance().dispatchSignal(Signals.CHANGE_GAME_STATE, Signals.CHANGE_GAME_STATE, AllStates.QUARTO_STATE)
 		}
 	
 	}

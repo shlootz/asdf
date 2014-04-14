@@ -18,13 +18,12 @@ package states.menuStates
 		override public function initialize():void
 		{
 			super.initialize();
-			new MetalWorksMobileTheme();
-			
-			var alert:Alert = new Alert();
-			alert.x = 150;
-			alert.y = 150;
-			alert.message = "Loading";
-			addChild(alert);
+			//
+			//var alert:Alert = new Alert();
+			//alert.x = 150;
+			//alert.y = 150;
+			//alert.message = "Loading";
+			//addChild(alert);
 		}
 		
 	}

@@ -1,6 +1,7 @@
 package states 
 {
 	import states.levelStates.ArenaState;
+	import states.levelStates.QuartoState;
 	import states.lobby.LobbyState;
 	import states.menuStates.LoadingState;
 	import states.menuStates.MainMenuState;
@@ -15,6 +16,7 @@ package states
 		public static const LOBBY_STATE:Class = LobbyState;
 		public static const ARENA_STATE:Class = ArenaState;
 		public static const BATTLE_STATE:Class = ArenaState;
+		public static const QUARTO_STATE:Class = QuartoState;
 	}
 
 }

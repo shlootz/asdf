@@ -154,7 +154,7 @@ package
 					{
 						juggler = _starling.juggler;
 						state = new AllStates.MAIN_MENU_STATE;
-						initServerConnection();
+						//initServerConnection();
 					}
 				});
 		}
